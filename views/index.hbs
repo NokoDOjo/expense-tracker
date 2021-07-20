@@ -1,0 +1,52 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-center">
+    <h7 class="mr-3">總金額 :</h7>
+    <h1>1000</h1>
+  </div>
+  <div class="mx-auto d-flex mx-auto justify-content-end mb-5">
+    <div class="dropdown">
+      <button
+        class="btn btn-warning dropdown-toggle mt-5"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      ><i class="fas fa-sort-amount-up"></i> 類別 </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a
+          class="dropdown-item"
+          href="/?searchKeyword={{searchKeyword}}&sortField=rating&sortOrder=desc"
+        >餐廳評分</a>
+        <a
+          class="dropdown-item"
+          href="/?searchKeyword={{searchKeyword}}&sortField=category&sortOrder=asc"
+        >餐廳類別</a>
+        <a
+          class="dropdown-item"
+          href="/?searchKeyword={{searchKeyword}}&sortField=name&sortOrder=asc"
+        >A > Z (升冪)</a>
+        <a
+          class="dropdown-item"
+          href="/?searchKeyword={{searchKeyword}}&sortField=name&sortOrder=desc"
+        >Z > A (降冪)</a>
+      </div>
+    </div>
+  </div>
+
+  <p>開始記錄你的第一項支出吧 !!</p>
+  <ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between">
+      An item
+      <div class="button-group">
+        <button type="button" class="btn btn-outline-info mr-3">修改</button>
+        <button type="button" class="btn btn-outline-danger mr-3">刪除</button>
+      </div>
+    </li>
+  </ul>
+  <div>
+    <button type="button" class="btn btn-primary btn-lg my-5">
+      <i class="fas fa-plus"></i>
+      新紀錄</button>
+  </div>
+</div>
