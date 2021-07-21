@@ -1,0 +1,32 @@
+<form action="/record" class="newExpense" method="POST">
+  <h1 class="title">add your expense</h1>
+
+  <div class="container d-flex justify-content-center">
+    <div class="contact-form row col-lg-10 d-flex justify-content-center">
+      <div class="form-field col-lg-8">
+        <input id="newName" name="name" type="text" class="input-text" value="" required>
+        <label for="name" class="label mb-4">name</label>
+      </div>
+      <div class="form-field col-lg-8">
+        <input id="newDate" name="date" type="date" class="input-text" value="" required>
+        <label for="date" class="label mb-4">date</label>
+      </div>
+      <div class="form-field col-lg-8">
+        <label class="label mb-4" for="category">category</label>
+        <select class="input-text" id="category" name="category" required>
+          {{#each categories}}
+            <option>{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="form-field col-lg-8">
+        <input id="newAmount" name="amount" type="number" min="0" class="input-text" value="" required>
+        <label for="amount" class="label mb-4">amount</label>
+      </div>
+      <div class="form-field col-lg-6 d-flex justify-content-center">
+        <button class="submit-btn" type="submit">新增支出</button>
+      </div>
+    </div>
+  </div>
+
+</form>
