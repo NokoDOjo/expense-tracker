@@ -6,7 +6,7 @@
   padding: 30px;
 }
 
-.newExpense .title {
+.newExpense .title, #totalAmount {
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 3px;

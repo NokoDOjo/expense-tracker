@@ -1,7 +1,7 @@
-<div class="container py-5">
+<div class="container py-5" style="max-width: 800px;">
   <div class="d-flex justify-content-center">
     <h7 class="mr-3">總金額 :</h7>
-    <h1>1000</h1>
+    <h1 class="mt-5" id="totalAmount">{{totalAmount}}</h1>
   </div>
   <div class="mx-auto d-flex mx-auto justify-content-end mb-5">
     <div class="dropdown">
@@ -12,34 +12,36 @@
         data-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false"
-      ><i class="fas fa-sort-amount-up"></i> 類別 </button>
+      ><i class="fas fa-filter"></i> 類別 </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a
-          class="dropdown-item"
-          href="/?searchKeyword={{searchKeyword}}&sortField=rating&sortOrder=desc"
-        >餐廳評分</a>
-        <a
-          class="dropdown-item"
-          href="/?searchKeyword={{searchKeyword}}&sortField=category&sortOrder=asc"
-        >餐廳類別</a>
-        <a
-          class="dropdown-item"
-          href="/?searchKeyword={{searchKeyword}}&sortField=name&sortOrder=asc"
-        >A > Z (升冪)</a>
-        <a
-          class="dropdown-item"
-          href="/?searchKeyword={{searchKeyword}}&sortField=name&sortOrder=desc"
-        >Z > A (降冪)</a>
+        {{#each categories}}
+        <a class="dropdown-item d-flex justify-content-between" href="/?searchKeyword={{searchKeyword}}&sortField=rating&sortOrder=desc"><i class="fas {{this.icon}}"></i>{{this.name}}</a>
+        {{/each}}
       </div>
     </div>
   </div>
 
-  <p>開始記錄你的第一項支出吧 !!</p>
+ 
   <ul class="list-group">
+    {{#unless record}}
+    <li class="list-group-item d-flex justify-content-center">
+      Click to create your first expense record
+    </li> 
+    {{/unless}}   
     {{#each record}}
-    <li class="list-group-item d-flex justify-content-between">
-      An item
-      <div class="button-group">
+    <li class="list-group-item row d-flex justify-content-between">
+      <div class="col-lg-8 d-flex justify-content-between">
+        <div>
+          <div >
+            <h5>{{this.name}}</h6>
+            <h7>{{this.date}}</h6>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <h4>{{this.amount}}</h4>
+        </div>
+      </div>
+      <div class="col-lg-4 button-group d-flex justify-content-end">
         <button type="button" class="btn btn-outline-info mr-3">修改</button>
         <button type="button" class="btn btn-outline-danger mr-3">刪除</button>
       </div>
