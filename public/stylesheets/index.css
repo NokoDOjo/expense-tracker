@@ -10,7 +10,7 @@
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 3px;
-  font-size: 3em;
+  font-size: 4em;
   line-height: 48px;
   padding-bottom: 20px;
   color: #5543ca;
@@ -76,6 +76,15 @@
 
 .contact-form .submit-btn:hover {
   transform: scale(1.2)
+}
+
+.add-btn {
+  background: linear-gradient(to right, #f4524d 0%, #5543ca 100%);
+  transition: .3s;
+}
+
+.add-btn:hover {
+  transform: scale(1.2);
 }
 
 

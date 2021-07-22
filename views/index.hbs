@@ -5,14 +5,9 @@
   </div>
   <div class="mx-auto d-flex mx-auto justify-content-end mb-5">
     <div class="dropdown">
-      <button
-        class="btn btn-warning dropdown-toggle mt-5"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      ><i class="fas fa-filter"></i> 類別 </button>
+      <button class="btn btn-warning dropdown-toggle mt-5" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-filter"></i> 類別 
+      </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         {{#each categories}}
         <a class="dropdown-item d-flex justify-content-between" href="/?searchKeyword={{searchKeyword}}&sortField=rating&sortOrder=desc"><i class="fas {{this.icon}}"></i>{{this.name}}</a>
@@ -23,16 +18,21 @@
 
  
   <ul class="list-group">
-    {{#unless record}}
+    {{#unless records}}
     <li class="list-group-item d-flex justify-content-center">
+      <a href="/record/new">
       Click to create your first expense record
+      </a>
     </li> 
     {{/unless}}   
-    {{#each record}}
+    {{#each records}}
     <li class="list-group-item row d-flex justify-content-between">
       <div class="col-lg-8 d-flex justify-content-between">
-        <div>
-          <div >
+        <div class="d-flex justify-content-between" style="width: 150px;">
+          <div class="category-icon" style="width: 40%">
+            <i class="fas {{this.category.icon}}" style="width: 30px; height: 30px"></i>
+          </div>
+          <div class="text-center">
             <h5>{{this.name}}</h6>
             <h7>{{this.date}}</h6>
           </div>
@@ -50,9 +50,9 @@
   </ul>
   <div>
   <a href="./record/new">
-    <button type="button" class="btn btn-primary btn-lg my-5">
-      <i class="fas fa-plus"></i>
-      新紀錄</button>
+    <button type="button" class="btn btn-primary btn-lg my-5 add-btn">
+      <i class="fas fa-plus"></i>新紀錄
+    </button>
   </a>
   </div>
 </div>

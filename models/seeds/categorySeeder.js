@@ -3,6 +3,7 @@ const db = require('../../config/mongoose')
 
 const categoryList = require('../../category.json')
 
+
 db.once('open', () => {
   Category.create(categoryList)
     .then(() => {

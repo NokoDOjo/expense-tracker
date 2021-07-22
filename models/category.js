@@ -8,7 +8,11 @@ const categorySchema = new Schema({
   icon: {
     type: String,
     required: true
-  }
+  },
+  records :[{
+    type: Schema.Types.ObjectId,
+    ref: 'Record'
+  }]
 })
 
 module.exports = mongoose.model('Category', categorySchema)
