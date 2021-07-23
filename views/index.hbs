@@ -4,13 +4,18 @@
     <h1 class="mt-5" id="totalAmount">{{totalAmount}}</h1>
   </div>
   <div class="mx-auto d-flex mx-auto justify-content-end mb-5">
-    <div class="dropdown">
-      <button class="btn btn-warning dropdown-toggle mt-5" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-filter"></i> 類別 
+    <div class="dropdown" style="width:100%">
+      <button class="btn btn-warning dropdown-toggle mt-5" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+        <i class="fas fa-filter"></i>
+        {{#unless filterCategory}}
+          請選擇類別
+        {{/unless}}
+        {{categoryName}} 
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item d-flex justify-content-between" href="/?filterCategory=">全部類別</a>
         {{#each categories}}
-        <a class="dropdown-item d-flex justify-content-between" href="/?searchKeyword={{searchKeyword}}&sortField=rating&sortOrder=desc"><i class="fas {{this.icon}}"></i>{{this.name}}</a>
+        <a class="dropdown-item d-flex justify-content-between" href="/?filterCategory={{this._id}}"><i class="fas {{this.icon}}"></i>{{this.name}}</a>
         {{/each}}
       </div>
     </div>
@@ -42,7 +47,7 @@
         </div>
       </div>
       <div class="col-lg-4 button-group d-flex justify-content-end">
-        <a href="/record/{{ this._id }}/edit" role="button" class="btn btn-outline-info mr-3">修改</a>
+        <a href="/record/{{ this._id }}/edit" role="button" class="btn btn-outline-info mr-3 d-flex align-items-center">修改</a>
         <button type="submit" class="btn btn-outline-danger mr-3" data-toggle="modal" data-target="#delete{{this._id}}">刪除</button>
       </div>
     </li>
