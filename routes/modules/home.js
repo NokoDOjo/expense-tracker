@@ -17,13 +17,13 @@ router.get('/', (req, res) => {
     .then(category => categories.push(...category))
     .catch(error => console.log(error))
 
-  if (filterCategory.length !== 0 ) {
+  if (filterCategory) {
   Category.findById(filterCategory)
     .lean()
     .then(category => categoryName = category.name)
     .catch(error => console.log(error))
   }
-  
+
   Record.find(filter)
   .lean()
   .populate('category')
