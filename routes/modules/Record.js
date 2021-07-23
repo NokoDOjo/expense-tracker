@@ -4,16 +4,19 @@ const router = express.Router()
 const Category = require('../../models/category')
 const Record = require('../../models/record')
 
+
+// modified category data
+const categories = []
+
+Category.find()
+  .lean()
+  .then( category => categories.push(...category))
+  .catch(error => console.log(error))
+
+
 // Create new expense record
 router.get('/new', (req, res) => {
-  const categories = []
-  return Category.find()
-   .lean()
-   .then(category => categories.push(...category))
-   .then(() => {
-     return res.render('new', { categories })
-   })
-   .catch(error => console.log(error))
+  return res.render('new', { categories })
 })
 
 router.post('/', (req, res) => {
@@ -31,6 +34,50 @@ router.post('/', (req, res) => {
         .catch(error => console.error(error))
     })
     .catch(error => console.error(error))
+})
+
+// Edit
+router.get('/:id/edit', (req, res) => {
+  const id = req.params.id
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.redirect('back')
+  return Record.findById(id)
+    .lean()
+    .populate('category')
+    .then((record) => { 
+      const currentDate = record.date.replace(/\D/g, '-')
+      res.render('edit', { record, categories, currentDate }) })
+    .catch(error => console.log(error))
+})
+
+router.put('/:id', (req, res) => {
+  const id = req.params.id
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.redirect('back')
+  const update = req.body
+
+  Record.findById(id)
+    .then(record => {
+      Category.findById(record.category)
+        .then(category => {
+          category.records = category.records.filter(record => record.toString() !== id)
+          category.save()
+        })
+        .catch(error => console.error(error))
+    })
+    .catch(error => console.error(error))
+  
+  return Category.findOne({ name: update.category})
+    .then(category => {
+      update.category = category._id
+      Record.findById(id, (err, record) => {
+        if (err) return console.error(err)
+        Object.assign(record, update)
+        return record.save()
+      })
+        .then(() => res.redirect('/'))
+        .catch(error => console.log(error)) 
+      category.records.push(id)
+      return category.save()
+    })
 })
 
 module.exports = router
