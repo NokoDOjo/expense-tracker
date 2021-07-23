@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Record = require('../models/record')
 
-mongoose.connect('mongodb://localhost/Record', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/Record', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
 
 // 取得資料庫連線狀態
 const db = mongoose.connection

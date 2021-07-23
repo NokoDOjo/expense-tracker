@@ -80,5 +80,15 @@ router.put('/:id', (req, res) => {
     })
 })
 
+// Delete
+
+router.delete('/:id', (req, res) => {
+  const id = req.params.id
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.redirect('back')
+  return Record.findOneAndRemove({ _id: id })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))   
+})
+
 module.exports = router
 
