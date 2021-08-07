@@ -7,7 +7,6 @@ const Record = require('../../models/record')
 
 // modified category data
 const categories = []
-
 Category.find()
   .lean()
   .then( category => categories.push(...category))
