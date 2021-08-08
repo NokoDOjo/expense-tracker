@@ -1,30 +1,35 @@
 [
   {
     "name": "晚餐",
+    "merchant": "麥當勞",
     "date":"2019/12/01",
     "category":"餐飲食品",
     "amount":"200"
   },
   {
     "name": "房租",
+    "merchant": "房東",
     "date":"2019/11/30",
     "category":"家居物業",
     "amount":"5000"
   },
   {
     "name": "看電影",
+    "merchant": "秀泰",
     "date":"2020/04/01",
     "category":"休閒娛樂",
     "amount":"500"
   },
   {
     "name": "加油費",
+    "merchant": "中油",
     "date":"2019/12/01",
     "category":"交通出行",
     "amount":"130"
   },
   {
     "name": "貓飼料",
+    "merchant": "老地方",
     "date":"2019/12/01",
     "category":"其他",
     "amount":"600"

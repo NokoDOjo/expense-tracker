@@ -6,8 +6,8 @@ const recordSchema = new Schema({
     required: true
   },
   category: {
-    type: Schema.Types.ObjectId,
-    ref: 'Category'
+    type: String,
+    required: true
   },
   date: {
     type: String,
@@ -15,6 +15,10 @@ const recordSchema = new Schema({
   },
   amount: {
     type: Number,
+    required: true
+  },
+  merchant: {
+    type: String,
     required: true
   },
   userId: {

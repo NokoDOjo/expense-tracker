@@ -1,15 +1,16 @@
 const Category = require('../category')
 const db = require('../../config/mongoose')
 
-const categoryList = require('../../category.json')
+const SEED_CATEGORY = require('../../category.json')
 
 
 db.once('open', () => {
-  Category.create(categoryList)
+  return Promise.all(Array.from(
+    { length: SEED_CATEGORY.length },
+    (_, i) => Category.create({ ...SEED_CATEGORY[i] })
+  ))
     .then(() => {
-      return db.close()
-    })
-    .then(() => {
-      return console.log('database connection close')
+      console.log('categorySeeder done')
+      process.exit()
     })
 })
