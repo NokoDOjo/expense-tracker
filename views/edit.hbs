@@ -8,7 +8,7 @@
         <label for="name" class="label mb-4">name</label>
       </div>
       <div class="form-field col-lg-8">
-        <input id="newDate" name="date" type="date" class="input-text" value="{{ currentDate }}" required>
+        <input id="newDate" name="date" type="date" class="input-text" value="{{ record.date }}" required>
         <label for="date" class="label mb-4">date</label>
       </div>
       <div class="form-field col-lg-8">
@@ -17,11 +17,12 @@
           {{#each categories}}
             <option>{{this.name}}</option>
           {{/each}}
-          {{#if record.category}}
-            <option selected>{{record.category.name}}</option>
-          {{/if}}
         </select>
       </div>
+      <div class="form-field col-lg-8">
+        <input id="newName" name="merchant" type="text" class="input-text" value="{{ record.merchant }}" required>
+        <label for="merchant" class="label mb-4">merchant</label>
+      </div>      
       <div class="form-field col-lg-8">
         <input id="newAmount" name="amount" type="number" min="0" class="input-text" value="{{ record.amount }}" required>
         <label for="amount" class="label mb-4">amount</label>

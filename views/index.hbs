@@ -3,22 +3,42 @@
     <h7 class="mr-3">總金額 :</h7>
     <h1 class="mt-5" id="totalAmount">{{totalAmount}}</h1>
   </div>
+  <div class="d-flex">
   <div class="mx-auto d-flex mx-auto justify-content-end mb-5">
-    <div class="dropdown" style="width:100%">
+    <div class="dropdown">
+      <button class="btn btn-warning dropdown-toggle mt-5" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+        <i class="fas fa-filter"></i>
+        {{#if filterMonth}}
+          {{filterMonth}}月份
+        {{else}}
+        請選擇月份
+        {{/if}}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item d-flex justify-content-between" href="/?filterMonth=">全部月份</a>
+        {{#each monthList}}
+        <a class="dropdown-item d-flex justify-content-between" href="/?filterMonth={{this.number}}">{{this.name}}</a>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="mx-auto d-flex mx-auto justify-content-end mb-5">
+    <div class="dropdown">
       <button class="btn btn-warning dropdown-toggle mt-5" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
         <i class="fas fa-filter"></i>
         {{#unless filterCategory}}
           請選擇類別
         {{/unless}}
-        {{categoryName}} 
+        {{filterCategory}} 
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item d-flex justify-content-between" href="/?filterCategory=">全部類別</a>
         {{#each categories}}
-        <a class="dropdown-item d-flex justify-content-between" href="/?filterCategory={{this._id}}"><i class="fas {{this.icon}}"></i>{{this.name}}</a>
+        <a class="dropdown-item d-flex justify-content-between" href="/?filterCategory={{this.name}}"><i class="fas {{this.icon}}"></i>{{this.name}}</a>
         {{/each}}
       </div>
     </div>
+  </div>
   </div>
 
  

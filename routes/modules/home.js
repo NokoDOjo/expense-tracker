@@ -2,37 +2,39 @@ const express = require('express')
 const router = express.Router()
 
 const Record = require('../../models/record')
-const Category = require('../../models/category')
+const categories = require('../../category.json')
+const monthList = require('../../month.json')
 
 router.get('/', (req, res) => {
-  const categories = []
-  const filterCategory = req.query.filterCategory
-  const filter = {}
-  let categoryName = ""
-  if (filterCategory) { filter.category = filterCategory }
+  const userId = req.user._id
+  const filterCategory = req.query.filterCategory || ''
+  const filterCategoryRegExp = new RegExp(filterCategory, "i")
+  const filterMonth = req.query.filterMonth ||''
+  const filterMonthRegExp = new RegExp("2021-"+ filterMonth, "i")
 
-
-  Category.find()
-    .lean()
-    .then(category => categories.push(...category))
-    .catch(error => console.log(error))
-
-  if (filterCategory) {
-  Category.findById(filterCategory)
-    .lean()
-    .then(category => categoryName = category.name)
-    .catch(error => console.log(error))
-  }
-
-  Record.find(filter)
+  Record.find({
+    userId,
+    date: {
+      $regex: filterMonthRegExp
+    },
+    category: {
+      $regex: filterCategoryRegExp
+    }
+  })
   .lean()
-  .populate('category')
-  .then((records) => {
+  .then( records => {
     let totalAmount = 0
     records.forEach(record => totalAmount += record.amount)
-    res.render('index', { categories, records, totalAmount, filterCategory, categoryName })
+    return res.render('index',{
+      records,
+      monthList,
+      categories,
+      totalAmount,
+      filterCategory,
+      filterMonth
+    })
   })
-  .catch(error => console.log(error))
+  .catch(err => console.log(err))
 })
 
 module.exports = router

@@ -1,16 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const router = express.Router()
-const Category = require('../../models/category')
+const categories = require('../../category.json')
 const Record = require('../../models/record')
-
-
-// modified category data
-const categories = []
-Category.find()
-  .lean()
-  .then( category => categories.push(...category))
-  .catch(error => console.log(error))
 
 
 // Create new expense record
@@ -19,72 +11,47 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  const record = req.body   // 整筆紀錄存放在 object 中
-  Category.findOne({ name: record.category })
-    .then(category => {
-      record.category = category._id    // 找到對應的 category._id
-
-      Record.create(record) 
-        .then(record => {
-          category.records.push(record._id)   // 更新 categories collection 中對應的類別
-          category.save()
-        })
-        .then(() => res.redirect('/'))
-        .catch(error => console.error(error))
-    })
-    .catch(error => console.error(error))
+  const userId = req.user._id
+  Record.create({ ...req.body, userId })
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
 })
 
 // Edit
 router.get('/:id/edit', (req, res) => {
-  const id = req.params.id
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.redirect('back')
-  return Record.findById(id)
+  const _id = req.params.id
+  const userId = req.user._id
+  if (!mongoose.Types.ObjectId.isValid(_id)) return res.redirect('back')
+  return Record.findOne({ _id, userId })
     .lean()
-    .populate('category')
-    .then((record) => { 
-      const currentDate = record.date.replace(/\D/g, '-')
-      res.render('edit', { record, categories, currentDate }) })
+    .then(record => {
+      console.log(userId)
+      res.render('edit', { record, categories})
+    })
     .catch(error => console.log(error))
 })
 
 router.put('/:id', (req, res) => {
-  const id = req.params.id
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.redirect('back')
-  const update = req.body
+  const _id = req.params.id
+  const userId = req.user._id
+  if (!mongoose.Types.ObjectId.isValid(_id)) return res.redirect('back')
 
-  Record.findById(id)
-    .then(record => {
-      Category.findById(record.category)
-        .then(category => {
-          category.records = category.records.filter(record => record.toString() !== id)
-          category.save()
-        })
-        .catch(error => console.error(error))
-    })
-    .catch(error => console.error(error))
-  
-  return Category.findOne({ name: update.category})
-    .then(category => {
-      update.category = category._id
-      Record.findById(id, (err, record) => {
-        if (err) return console.error(err)
-        Object.assign(record, update)
-        return record.save()
-      })
-        .then(() => res.redirect('/'))
-        .catch(error => console.log(error)) 
-      category.records.push(id)
-      return category.save()
-    })
+  return Record.findOne({ _id, userId }, (err, record) => {
+    if (err) return console.error(err)
+    Object.assign(record, req.body)
+    return record.save()
+  })
+  .then(() => res.redirect('/'))
+  .catch(err => console.log(err)) 
 })
 
 // Delete
 
 router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.redirect('back')
-  return Record.findOneAndRemove({ _id: id })
+  const userId = req.user._id
+  const _id = req.params.id
+  if (!mongoose.Types.ObjectId.isValid(_id)) return res.redirect('back')
+  return Record.findOneAndRemove({ _id, userId })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))   
 })
