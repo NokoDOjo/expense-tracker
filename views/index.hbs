@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center">
     <h7 class="mr-3">總金額 :</h7>
     <h1 class="mt-5" id="totalAmount">{{totalAmount}}</h1>
-    <canvas id="myChart"></canvas>
+    <canvas class="mx-4" id="myChart"></canvas>
   </div>
   <div class="d-flex">
   <div class="mx-auto d-flex mx-auto justify-content-end mb-5">
@@ -67,7 +67,7 @@
           <h4 class="px-3" style="opacity: 0.7;" >{{this.merchant}}</h4>
         </div>
       </th>
-      <th class="amount align-middle"><h4>{{this.amount}}</h4></th>
+      <th class="amount align-middle" data-category="{{this.category}}"><h4>{{this.amount}}</h4></th>
       <th class="buttons align-middle">
         <div class="d-flex justify-content-around">
           <a href="/record/{{ this._id }}/edit" role="button" class="btn btn-outline-info d-flex align-items-center">Edit</a>
@@ -109,14 +109,24 @@
 </div>
 
 <script>
+  let foodAmount = 0
+  let homeAmount = 0
+  let trafficAmount = 0
+  let funAmount = 0
+  let elseAmount = 0
   const ctx = document.getElementById('myChart')
+  document.querySelectorAll('[data-category="家居物業"]').forEach(e => homeAmount += Number(e.textContent))
+  document.querySelectorAll('[data-category="交通出行"]').forEach(e => trafficAmount += Number(e.textContent))
+  document.querySelectorAll('[data-category="休閒娛樂"]').forEach(e => funAmount += Number(e.textContent))
+  document.querySelectorAll('[data-category="餐飲食品"]').forEach(e => foodAmount += Number(e.textContent))
+  document.querySelectorAll('[data-category="其他"]').forEach(e => elseAmount += Number(e.textContent))
   const myChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
       labels: ["家居物業", "交通出行", "休閒娛樂", "餐飲食品", "其他"],
       datasets: [{
         label: '# of Votes',
-        data: [10, 10, 10, 10, 10],
+        data: [homeAmount, trafficAmount, funAmount, foodAmount, elseAmount],
         backgroundColor: [
         'rgb(255, 99, 132)',
         'rgb(54, 162, 235)',
