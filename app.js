@@ -3,6 +3,7 @@ const exphbs = require('express-handlebars')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
+const helpers = require('handlebars-helpers')();
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
   res.locals.user = req.user
   res.locals.success_msg = req.flash('success_msg')
   res.locals.warning_msg = req.flash('warning_msg')
+  res.locals.login_msg = req.flash('login_msg')
   next()
 })
 
