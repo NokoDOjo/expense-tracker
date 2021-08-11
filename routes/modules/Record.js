@@ -25,7 +25,6 @@ router.get('/:id/edit', (req, res) => {
   return Record.findOne({ _id, userId })
     .lean()
     .then(record => {
-      console.log(userId)
       res.render('edit', { record, categories})
     })
     .catch(error => console.log(error))

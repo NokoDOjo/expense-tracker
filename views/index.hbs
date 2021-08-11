@@ -4,43 +4,27 @@
     <h1 class="mt-5" id="totalAmount">{{totalAmount}}</h1>
     <canvas class="mx-4" id="myChart"></canvas>
   </div>
-  <div class="d-flex">
-  <div class="mx-auto d-flex mx-auto justify-content-end mb-5">
-    <div class="dropdown">
-      <button class="btn btn-warning dropdown-toggle mt-5" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
-        <i class="fas fa-filter"></i>
-        {{#if filterMonth}}
-          {{filterMonth}}月份
-        {{else}}
-        請選擇月份
-        {{/if}}
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item d-flex justify-content-between" href="/?filterMonth=">全部月份</a>
-        {{#each monthList}}
-        <a class="dropdown-item d-flex justify-content-between" href="/?filterMonth={{this.number}}">{{this.name}}</a>
-        {{/each}}
+  <form class="my-5" action="/filter" method="POST">
+    <div class="form-row d-flex justify-content-end">
+      <div class="form-group col-lg-4">
+        <select class="input-text btn btn-warning" name="filterCategory" onchange="this.form.submit()" required>
+          <option disabled selected>請選擇類別</option>
+          {{#each categories}}
+            <option>{{this.name}}</option>
+          {{/each}}
+        </select>
       </div>
-    </div>
-  </div>
-  <div class="mx-auto d-flex mx-auto justify-content-end mb-5">
-    <div class="dropdown">
-      <button class="btn btn-warning dropdown-toggle mt-5" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
-        <i class="fas fa-filter"></i>
-        {{#unless filterCategory}}
-          請選擇類別
-        {{/unless}}
-        {{filterCategory}} 
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item d-flex justify-content-between" href="/?filterCategory=">全部類別</a>
-        {{#each categories}}
-        <a class="dropdown-item d-flex justify-content-between" href="/?filterCategory={{this.name}}"><i class="fas {{this.icon}}"></i>{{this.name}}</a>
-        {{/each}}
+      <div class="form-group col-lg-4">
+        <select class="input-text btn btn-warning" name="filterMonth" onchange="this.form.submit()" required>
+          <option disabled selected>請選擇月份</option>
+          {{#each monthList}}
+            <option value="{{this.number}}">{{this.name}}</option>
+          {{/each}}
+        </select>
       </div>
+      <a href="/" id="reset-button" class="btn btn-info">清除條件</a>
     </div>
-  </div>
-  </div>
+  </form>
 
  
   <table class="table table-striped" id="expenses-list">
@@ -105,7 +89,6 @@
       <i class="fas fa-plus"></i>新紀錄
     </button>
   </a>
-  </div>
 </div>
 
 <script>
