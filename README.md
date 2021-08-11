@@ -1,6 +1,15 @@
 # 老爸的私房錢
 一個用 Express 和 MongoDB 建立的簡單記帳APP
 
+歡迎使用測試帳號登入使用，帳密如下：
+```
+帳號: root@example.com
+密碼: 123
+```
+
+![image](https://github.com/NokoDOjo/expense-tracker/blob/master/%E6%93%B7%E5%8F%961.PNG)
+![image](https://github.com/NokoDOjo/expense-tracker/blob/master/%E6%93%B7%E5%8F%96.PNG)
+
 ## 功能介紹
 - 在首頁一次瀏覽所有支出的清單
 - 在首頁看到所有支出清單的總金額
