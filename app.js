@@ -4,6 +4,7 @@ const session = require('express-session')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const helpers = require('handlebars-helpers')()
+const { logErrors } = require('./middleware/error')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use(logErrors)
 app.use(routes)
 
 app.listen(PORT, () => {

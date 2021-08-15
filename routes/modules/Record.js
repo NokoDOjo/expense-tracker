@@ -10,15 +10,15 @@ router.get('/new', (req, res) => {
   return res.render('new', { categories })
 })
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
   const userId = req.user._id
   Record.create({ ...req.body, userId })
     .then(() => res.redirect('/'))
-    .catch(err => console.log(err))
+    .catch(next)
 })
 
 // Edit
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', (req, res, next) => {
   const _id = req.params.id
   const userId = req.user._id
   if (!mongoose.Types.ObjectId.isValid(_id)) return res.redirect('back')
@@ -27,10 +27,10 @@ router.get('/:id/edit', (req, res) => {
     .then(record => {
       res.render('edit', { record, categories})
     })
-    .catch(error => console.log(error))
+    .catch(next)
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
   const _id = req.params.id
   const userId = req.user._id
   if (!mongoose.Types.ObjectId.isValid(_id)) return res.redirect('back')
@@ -41,18 +41,18 @@ router.put('/:id', (req, res) => {
     return record.save()
   })
   .then(() => res.redirect('/'))
-  .catch(err => console.log(err)) 
+  .catch(next) 
 })
 
 // Delete
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
   const userId = req.user._id
   const _id = req.params.id
   if (!mongoose.Types.ObjectId.isValid(_id)) return res.redirect('back')
   return Record.findOneAndRemove({ _id, userId })
     .then(() => res.redirect('/'))
-    .catch(error => console.log(error))   
+    .catch(next)   
 })
 
 module.exports = router

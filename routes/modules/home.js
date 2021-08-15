@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
       totalAmount
     })
   })
-  .catch(err => console.log(err))
+  .catch(next)
 })
 
 router.post('/filter', (req, res) => {
@@ -61,6 +61,6 @@ router.post('/filter', (req, res) => {
       filterMonth
     })
   })
-  .catch(err => console.log(err))
+  .catch(next)
 })
 module.exports = router
