@@ -3,7 +3,8 @@ const User = require('../../models/user')
 const passport = require('passport')
 const bcrypt = require('bcryptjs')
 const router = express.Router()
-
+const { check, validationResult } = require('express-validator')
+ 
 router.get('/login', (req, res) => {
   res.render('login')
 })
@@ -17,7 +18,7 @@ router.get('/register', (req, res) => {
   res.render('register')
 })
 
-router.post('/register', (req, res, next) => {
+router.post('/register', check('email').isEmail(), (req, res, next) => {
   const { name, email, password, confirmPassword } = req.body
   const errors = []
   if (!name || !email || !password || !confirmPassword) {
@@ -25,6 +26,9 @@ router.post('/register', (req, res, next) => {
   }
   if (password !== confirmPassword) {
     errors.push({ message: '密碼與確認密碼不相符!'})
+  }
+  if (validationResult(req)) {
+    errors.push({ message: '無效的email'})
   }
   if (errors.length) {
     return res.render('register', {

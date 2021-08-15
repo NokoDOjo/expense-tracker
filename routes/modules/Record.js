@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const router = express.Router()
 const categories = require('../../category.json')
 const Record = require('../../models/record')
+const { check } = require('express-validator')
 
 
 // Create new expense record
